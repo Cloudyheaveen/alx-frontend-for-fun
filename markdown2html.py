@@ -1,6 +1,4 @@
-#!/usr/bin/python3
-"""
-This is a script to convert a Markdown file to HTML.
+s is a script to convert a Markdown file to HTML.
 
 Usage:
     ./markdown2html.py [input_file] [output_file]
@@ -16,6 +14,7 @@ Example:
 import argparse
 import pathlib
 import re
+import sys
 
 
 def convert_md_to_html(input_file, output_file):
@@ -52,13 +51,20 @@ if __name__ == '__main__':
     parser.add_argument('output_file', help='path to output HTML file')
     args = parser.parse_args()
 
+    # Check if both input and output files are provided
+    if len(sys.argv) != 3:
+        print("Usage: ./markdown2html.py [input_file] [output_file]", file=sys.stderr)
+        sys.exit(1)
+
     # Check if the input file exists
     input_path = pathlib.Path(args.input_file)
     if not input_path.is_file():
-        print(f'Missing {input_path}', file=sys.stderr)
+        print(f'Missing {args.input_file}', file=sys.stderr)
         sys.exit(1)
 
     # Convert the markdown file to HTML
     convert_md_to_html(args.input_file, args.output_file)
 
+    # Exit with success
+    sys.exit(0)
 
